@@ -1,5 +1,23 @@
 # Wiki
 
+## keyof
+
+객체 형태의 타입을, 따로 속성들만 뽑아 모아 유니온 타입으로 만들어주는 연산자
+
+```typescript
+type Type = {
+  name: string;
+  age: number;
+  married: boolean;
+};
+
+type Union = keyof Type; // type Union = name | age | married
+
+const a: Union = "name";
+const b: Union = "age";
+const c: Union = "married";
+```
+
 ## 제네릭(generic)
 
 타입을 직접적으로 고정된 값으로 명시하지말고 '변수' 를 통해 언제든지 변할 수 있는 타입을 통해 보다 유연하게 해주는 문법을 의미한다. 즉, **타입의 변수화**로 요약할 수 있다.
@@ -31,24 +49,6 @@ getProperty(x, "a"); // 성공
 getProperty(x, "m"); // 오류: 인수의 타입 'm' 은 'a' | 'b' | 'c' | 'd'에 해당되지 않음.
 ```
 
-### keyof
-
-객체 형태의 타입을, 따로 속성들만 뽑아 모아 유니온 타입으로 만들어주는 연산자
-
-```typescript
-type Type = {
-  name: string;
-  age: number;
-  married: boolean;
-};
-
-type Union = keyof Type; // type Union = name | age | married
-
-const a: Union = "name";
-const b: Union = "age";
-const c: Union = "married";
-```
-
 ## 유틸리티 타입(utility type)
 
 유틸리티 타입은 이미 정의해 놓은 타입을 변환할 때 유용한 타입이다.
@@ -71,4 +71,41 @@ const todo: TodoPreview = {
   title: "Clean room",
   completed: false,
 };
+```
+
+### Readonly
+
+TYPE의 모든 속성을 **읽기 전용(readonly)**으로 변경한 새로운 타입을 반환한다.
+
+```ts
+type Readonly<T> = {
+  readonly [P in keyof T]: T[P];
+};
+
+Readonly<TYPE>;
+```
+
+```ts
+interface User {
+  name?: string;
+  age?: number;
+}
+
+// 인터페이스 User의 속성을 모두 readonly 설정
+type Readonly_User = Readonly<User>;
+
+/*
+type Required_User = {
+    readonly name?: string | undefined;
+    readonly age?: number | undefined;
+}
+*/
+
+const user: Readonly<User> = {
+  name: "hoon",
+  age: 13,
+  phone: 01012345678,
+};
+
+user.age = 11; // ERROR !!
 ```
