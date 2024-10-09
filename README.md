@@ -109,3 +109,18 @@ const user: Readonly<User> = {
 
 user.age = 11; // ERROR !!
 ```
+
+## PropertyKey 유형 ?
+
+`PropertyKey` 타입은 key값에 해당하는 전역 타입이다.
+
+```ts
+// string | number | symbol
+type Example = PropertyKey;
+```
+
+가능한 모든 키를 사용하여 Record 유형을 생성하려는 상황에서 유용할 수 있습니다.
+
+```ts
+type RecordWithAllKeys = Record<PropertyKey, unknown>;
+```
