@@ -18,6 +18,18 @@ const b: Union = "age";
 const c: Union = "married";
 ```
 
+## infer (조건부 extends)
+
+조건부 `extends`절에서 사용하는 키워드이다.
+
+타입 스크립트가 엔진이 런타임 상황에서 타입을 추론할 수 있도록 하고, 추론한 타입 값을 `infer` 타입 파라미터 `U` 에 할당해준다.
+
+```ts
+type Foo<T> = T extends { a: infer U; b: infer U } ? U : never;
+type T10 = Foo<{ a: string; b: string }>; // string
+type T11 = Foo<{ a: string; b: number }>; // string | number
+```
+
 ## 제네릭(generic)
 
 타입을 직접적으로 고정된 값으로 명시하지말고 '변수' 를 통해 언제든지 변할 수 있는 타입을 통해 보다 유연하게 해주는 문법을 의미한다. 즉, **타입의 변수화**로 요약할 수 있다.
